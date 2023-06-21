@@ -1,11 +1,20 @@
+package valhalla.test;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+/*
+*  Ridiculously big class to deserialize responses from the valhalla.test.Valhalla server. Only implemented a deserializer for Matrix
+*  requests.
+* */
 
 public class ValhallaOutputDeserializer {
 

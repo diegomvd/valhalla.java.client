@@ -1,3 +1,5 @@
+package valhalla.test;
+
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
@@ -101,15 +103,15 @@ public class ValhallaRuntimeEnvironment {
         // Check the response status code and act accordingly. Note that we don't expect a 201 code
         // as JSON I/O RPC is producing plain 200 with the result in the response body.
         if (status == HTTPStatusCode.SUCCESS) {
-            logger.info("Request to Valhalla Server has been successful.");
+            logger.info("Request to valhalla.test.Valhalla Server has been successful.");
 
             // Get the HTTP entity:
             String body = response.body();
 
             // Check the HTTP entity:
             if (body == null) {
-                logger.severe("No content received from Valhalla Server.");
-                throw new ValhallaException("No content received from Valhalla Server.");
+                logger.severe("No content received from valhalla.test.Valhalla Server.");
+                throw new ValhallaException("No content received from valhalla.test.Valhalla Server.");
             }
 
             return body;
@@ -117,31 +119,31 @@ public class ValhallaRuntimeEnvironment {
         } else {
 
             switch (status) {
-                case FAIL -> logger.severe("Request to Valhalla Server has failed.");
+                case FAIL -> logger.severe("Request to valhalla.test.Valhalla Server has failed.");
                 case INVALID_PATH ->
-                        logger.severe("Request to Valhalla Server has failed: invalid path.");
+                        logger.severe("Request to valhalla.test.Valhalla Server has failed: invalid path.");
                 case INVALID_MESSAGE ->
-                        logger.severe("Request to Valhalla Server has failed: invalid message.");
+                        logger.severe("Request to valhalla.test.Valhalla Server has failed: invalid message.");
                 case SERVER_PROBLEM ->
-                        logger.severe("Request to Valhalla Server has failed: server problem.");
+                        logger.severe("Request to valhalla.test.Valhalla Server has failed: server problem.");
                 case NOT_IMPLEMENTED ->
-                        logger.severe("Request to Valhalla Server has failed: not implemented.");
+                        logger.severe("Request to valhalla.test.Valhalla Server has failed: not implemented.");
                 default ->
-                        {logger.severe("Unrecognized response from the Valhalla Server: " + statusCode);
-                        throw new ValhallaException("Unrecognized response from the Valhalla Server: " + statusCode);}
+                        {logger.severe("Unrecognized response from the valhalla.test.Valhalla Server: " + statusCode);
+                        throw new ValhallaException("Unrecognized response from the valhalla.test.Valhalla Server: " + statusCode);}
             }
 
             String message;
             String body = response.body();
             if (body == null) {
-                logger.severe("No content received from Valhalla Server.");
-                message = "No content received from Valhalla Server.";
+                logger.severe("No content received from valhalla.test.Valhalla Server.");
+                message = "No content received from valhalla.test.Valhalla Server.";
             } else {
                 try {
                     message = body;
                 } catch (RuntimeException e) {
-                    logger.severe("Cannot read the output from Valhalla server response.");
-                    throw new ValhallaException("Cannot read the output from Valhalla server response.", e);
+                    logger.severe("Cannot read the output from valhalla.test.Valhalla server response.");
+                    throw new ValhallaException("Cannot read the output from valhalla.test.Valhalla server response.", e);
                 }
             }
             logger.severe("Bad request: " + message);
@@ -154,7 +156,7 @@ public class ValhallaRuntimeEnvironment {
         String url = this.getBaseURI().toString() + ValhallaRequestType.getURLSchema(requestType);
         HttpRequest request = buildRequest(url, input);
 
-        logger.info("Sending synchronous request to Valhalla server (" + url + ").");
+        logger.info("Sending synchronous request to valhalla.test.Valhalla server (" + url + ").");
 
         HttpResponse<String> response;
         try {

@@ -1,3 +1,5 @@
+package valhalla.test;
+
 public class ValhallaException extends Exception{
 
     public ValhallaException(String message) {

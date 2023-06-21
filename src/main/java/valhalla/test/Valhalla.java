@@ -1,3 +1,12 @@
+package valhalla.test;
+
+import valhalla.test.ValhallaException;
+import valhalla.test.ValhallaOutputDeserializer;
+import valhalla.test.ValhallaRuntimeEnvironment;
+
+/**
+ * Java peer to interact with the valhalla.test.Valhalla server via simple function calls using JSON strings as inputs.
+ */
 public class Valhalla {
 
     private boolean isOnline = false;
@@ -15,18 +24,18 @@ public class Valhalla {
         return isOnline;
     }
 
+    public ValhallaOutputDeserializer.Matrix matrix(String input) throws ValhallaException {
+        String response = valhalla.valhallaSendRequest(input, ValhallaRuntimeEnvironment.ValhallaRequestType.MATRIX);
+        deserializer.setJson(response);
+        return deserializer.deserializeMatrixOutput();
+    }
+
     public String route(String input) throws ValhallaException {
         return valhalla.valhallaSendRequest(input, ValhallaRuntimeEnvironment.ValhallaRequestType.ROUTE);
     }
 
     public String optimized_route(String input) throws ValhallaException {
         return valhalla.valhallaSendRequest(input, ValhallaRuntimeEnvironment.ValhallaRequestType.OPTIMIZE);
-    }
-
-    public ValhallaOutputDeserializer.Matrix matrix(String input) throws ValhallaException {
-        String response = valhalla.valhallaSendRequest(input, ValhallaRuntimeEnvironment.ValhallaRequestType.MATRIX);
-        deserializer.setJson(response);
-        return deserializer.deserializeMatrixOutput();
     }
 
     public String isochrone(String input) throws ValhallaException {
