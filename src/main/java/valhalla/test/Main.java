@@ -15,12 +15,16 @@ public class Main {
 
     public static void main(String[] args) throws ValhallaException {
 
+        // valhalla.test.Valhalla Java peer. Connected to "http://localhost:8002" by default.
+        Valhalla valhalla = new Valhalla();
+
+        /*
+        * Matrix API example.
+        * */
+
         // Coordinates of sources and targets for the travel-time matrix. Note the costing parameter which essentially
         // is the means of transport. For testing make sure that coordinates are within the loaded OSM environment.
         String input = "{\"sources\":[{\"lat\":42.544014,\"lon\":1.5163911},{\"lat\":42.524014,\"lon\":1.5263911}],\"targets\":[{\"lat\":42.539735,\"lon\":1.4988},{\"lat\":42.541735,\"lon\":1.4888}],\"costing\":\"pedestrian\"}";
-
-        // valhalla.test.Valhalla Java peer. Connected to "http://localhost:8002" by default.
-        Valhalla valhalla = new Valhalla();
 
         // Call to matrix method with input, the function returns the deserialized JSON string in a specific format.
         ValhallaOutputDeserializer.Matrix matrix = valhalla.matrix(input);
@@ -50,6 +54,22 @@ public class Main {
         }
         System.out.println(g);
 
+        /*
+         * Optimized Route API example.
+         * */
+
+        // This is a back and forth trip in Andorra.
+        input = "{\"locations\":[{\"lat\":42.544014,\"lon\":1.5163911},{\"lat\":42.539735,\"lon\":1.4988},{\"lat\":42.544014,\"lon\":1.5163911}],\"costing\":\"auto\"}";
+
+        // Call to optimized route method with input, the function returns the deserialized JSON string in a specific format.
+        ValhallaOutputDeserializer.OptimizedRoute route = valhalla.optimized_route(input);
+        List<String> path = route.getPath();
+        Map<String,Double> stats = route.getSummaryStatistics();
+        List<Map<String,Number>> waypoints = route.getWaypoints();
+
+        System.out.println(path);
+        System.out.println(stats);
+        System.out.println(waypoints);
     }
 
 }

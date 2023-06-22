@@ -34,8 +34,10 @@ public class Valhalla {
         return valhalla.valhallaSendRequest(input, ValhallaRuntimeEnvironment.ValhallaRequestType.ROUTE);
     }
 
-    public String optimized_route(String input) throws ValhallaException {
-        return valhalla.valhallaSendRequest(input, ValhallaRuntimeEnvironment.ValhallaRequestType.OPTIMIZE);
+    public ValhallaOutputDeserializer.OptimizedRoute optimized_route(String input) throws ValhallaException {
+        String response = valhalla.valhallaSendRequest(input, ValhallaRuntimeEnvironment.ValhallaRequestType.OPTIMIZE);
+        deserializer.setJson(response);
+        return deserializer.deserializeOptimizedRoutes();
     }
 
     public String isochrone(String input) throws ValhallaException {
